@@ -28,6 +28,7 @@ export const LoginPage: React.FC = () => {
                         height={200}
                         width={200}
                         loading="lazy"
+                        alt="logo"
                     />
                     <Typography.Title level={2} style={{ color: 'white' }}>
                         Dark Theme Todo List
