@@ -14,12 +14,22 @@ interface HeaderContentProps {
 export const HeaderContent: React.FC<HeaderContentProps> = ({ logoutAccount }) => {
     const mockUser = 'User'
 
+    const onMouseOverEvent = (e: any) => {
+        e.target.style.color = '#1677ff';
+    }
+
+    const onMouseOutEvent = (e: any) => {
+        e.target.style.color = 'black';
+    }
+
     const popoverContent = (
         <Button
             type='ghost'
             onClick={() => logoutAccount()}
+            onMouseOver={onMouseOverEvent}
+            onMouseOut={onMouseOutEvent}
         >
-            Logout
+            Log out
         </Button>
     )
 

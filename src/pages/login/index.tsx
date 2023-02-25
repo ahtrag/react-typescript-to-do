@@ -7,7 +7,7 @@ import {
     Typography,
 } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styles from './login.module.css'
 
 export const LoginPage: React.FC = () => {
@@ -74,16 +74,16 @@ export const LoginPage: React.FC = () => {
                             </Checkbox>
                         </Form.Item>
 
-                        <a className="login-form-forgot" href="">
+                        <Link className="login-form-forgot" to="/forgot-password">
                             Forgot password
-                        </a>
+                        </Link>
                     </Form.Item>
 
                     <Form.Item>
                         <Button type="primary" htmlType="submit" className="login-form-button">
                             Log in
                         </Button>
-                        Or <a href="">register now!</a>
+                        Or <Link to="/register">register now!</Link>
                     </Form.Item>
                 </Form>
             </div>

@@ -8,6 +8,7 @@ import styles from './content.module.css'
 import { Layout, Menu, Spin } from 'antd';
 import type { MenuProps } from 'antd';
 import { HeaderContent } from './components/HeaderContent';
+import { AboutUs } from './components/AboutUs';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -36,6 +37,7 @@ export const ContentPage: React.FC = () => {
     const navigate = useNavigate()
     const [collapsed, setCollapsed] = useState<boolean>(false)
     const [loadingContent, setLoadingContent] = useState<boolean>(false)
+    const [selectedMenuItem, setSelectedMenuItem] = useState<string>("1")
 
     const logoutAccount = () => {
         navigate('/')
@@ -43,8 +45,19 @@ export const ContentPage: React.FC = () => {
         console.log('QUITTED')
     }
 
-    const handleChangeMenu = (e: MenuItem) => {
-        console.log('MENU CHANGED', e)
+    const renderContent = (key: string) => {
+        switch (key) {
+            case '1':
+                return (<h1>Content</h1>);
+            case '2':
+                return (<AboutUs />);
+            default:
+                break;
+        }
+    }
+
+    const handleChangeMenu = (e: any) => {
+        setSelectedMenuItem(e.key)
 
         setLoadingContent(true)
 
@@ -90,13 +103,7 @@ export const ContentPage: React.FC = () => {
                     {
                         loadingContent ?
                             <Spin /> :
-                            // indicates very long content
-                            Array.from({ length: 100 }, (_, index) => (
-                                <React.Fragment key={index}>
-                                    {index % 20 === 0 && index ? 'more' : '...'}
-                                    <br />
-                                </React.Fragment>
-                            ))
+                            renderContent(selectedMenuItem)
                     }
                 </Content>
                 <Footer className={styles.footer}>
