@@ -7,14 +7,14 @@ import {
     Button,
 } from 'antd'
 import { useNavigate } from 'react-router-dom'
+import { UserTypes } from '../../../../interface/UserTypes';
 
 interface HeaderContentProps {
-    logoutAccount: () => void
+    logoutAccount: () => void;
+    userData: UserTypes;
 }
 
-export const HeaderContent: React.FC<HeaderContentProps> = ({ logoutAccount }) => {
-    const mockUser = 'User'
-
+export const HeaderContent: React.FC<HeaderContentProps> = ({ logoutAccount, userData }) => {
     const navigate = useNavigate()
 
     const onMouseOverEvent = (e: any) => {
@@ -74,7 +74,7 @@ export const HeaderContent: React.FC<HeaderContentProps> = ({ logoutAccount }) =
                                     cursor: 'pointer',
                                 }}
                             >
-                                {mockUser.charAt(0)}
+                                {(userData.username || '').charAt(0)}
                             </Avatar>
                         </Popover>
                     </div>

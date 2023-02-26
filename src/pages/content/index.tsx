@@ -2,7 +2,7 @@ import {
     BulbOutlined,
     UserOutlined,
 } from '@ant-design/icons'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './content.module.css'
 import { Layout, Menu, Spin } from 'antd';
@@ -10,6 +10,8 @@ import type { MenuProps } from 'antd';
 import { HeaderContent } from './components/HeaderContent';
 import { AboutUs } from './components/AboutUs';
 import { NoteComponent } from './components/NoteComponent';
+import { UserContext } from '../../context/LoginContext';
+import { clearData, getData } from '../../utils/utilsStorage';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -35,15 +37,19 @@ const items: MenuItem[] = [
 ]
 
 export const ContentPage: React.FC = () => {
+    const [user] = useContext<any>(UserContext)
+
+    const localUserData = getData('user-data')
+
     const navigate = useNavigate()
     const [collapsed, setCollapsed] = useState<boolean>(false)
     const [loadingContent, setLoadingContent] = useState<boolean>(false)
     const [selectedMenuItem, setSelectedMenuItem] = useState<string>("1")
 
     const logoutAccount = () => {
-        navigate('/')
+        clearData()
 
-        console.log('QUITTED')
+        navigate('/')
     }
 
     const renderContent = (key: string) => {
@@ -98,7 +104,10 @@ export const ContentPage: React.FC = () => {
                 <Header
                     className={styles.header}
                 >
-                    <HeaderContent logoutAccount={logoutAccount} />
+                    <HeaderContent
+                        logoutAccount={logoutAccount}
+                        userData={user ? user : localUserData}
+                    />
                 </Header>
                 <Content className={styles.container}>
                     {
