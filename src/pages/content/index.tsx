@@ -9,6 +9,7 @@ import { Layout, Menu, Spin } from 'antd';
 import type { MenuProps } from 'antd';
 import { HeaderContent } from './components/HeaderContent';
 import { AboutUs } from './components/AboutUs';
+import { NoteComponent } from './components/NoteComponent';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -48,7 +49,7 @@ export const ContentPage: React.FC = () => {
     const renderContent = (key: string) => {
         switch (key) {
             case '1':
-                return (<h1>Content</h1>);
+                return (<NoteComponent />);
             case '2':
                 return (<AboutUs />);
             default:

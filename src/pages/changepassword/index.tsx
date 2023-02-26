@@ -1,9 +1,9 @@
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import styles from './forgotpassword.module.css'
+import styles from './changepassword.module.css'
 
-export const ForgotPassword: React.FC = () => {
+export const ChangePassword: React.FC = () => {
     const navigate = useNavigate()
 
     return (
@@ -11,12 +11,12 @@ export const ForgotPassword: React.FC = () => {
             <div className={styles.back}>
                 <ArrowLeftOutlined
                     className={styles.backButton}
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate('/home')}
                 />
             </div>
             <div className={styles.container}>
-                ForgotPassword
+                Change Password
             </div>
         </>
     )
-} 
+}

@@ -6,6 +6,7 @@ import {
     Popover,
     Button,
 } from 'antd'
+import { useNavigate } from 'react-router-dom'
 
 interface HeaderContentProps {
     logoutAccount: () => void
@@ -13,6 +14,8 @@ interface HeaderContentProps {
 
 export const HeaderContent: React.FC<HeaderContentProps> = ({ logoutAccount }) => {
     const mockUser = 'User'
+
+    const navigate = useNavigate()
 
     const onMouseOverEvent = (e: any) => {
         e.target.style.color = '#1677ff';
@@ -23,28 +26,44 @@ export const HeaderContent: React.FC<HeaderContentProps> = ({ logoutAccount }) =
     }
 
     const popoverContent = (
-        <Button
-            type='ghost'
-            onClick={() => logoutAccount()}
-            onMouseOver={onMouseOverEvent}
-            onMouseOut={onMouseOutEvent}
-        >
-            Log out
-        </Button>
+        <>
+            <div>
+                <Button
+                    type='ghost'
+                    onClick={() => navigate('/change-password')}
+                    onMouseOver={onMouseOverEvent}
+                    onMouseOut={onMouseOutEvent}
+                >
+                    Change Password
+                </Button>
+            </div>
+            <div>
+                <Button
+                    type='ghost'
+                    onClick={() => logoutAccount()}
+                    onMouseOver={onMouseOverEvent}
+                    onMouseOut={onMouseOutEvent}
+                >
+                    Log out
+                </Button>
+            </div>
+        </>
     )
 
     return (
         <>
             <Row justify="end">
-                <Col span={12}>
-
-                </Col>
-                <Col span={12} push={50}>
-                    <div>
+                <Col span={24} push={50}>
+                    <div
+                        style={{
+                            marginRight: '24px'
+                        }}
+                    >
                         <Popover
                             placement='bottom'
                             trigger='click'
                             content={popoverContent}
+                            style={{ padding: 0 }}
                         >
                             <Avatar
                                 alt="avatar"
@@ -53,7 +72,6 @@ export const HeaderContent: React.FC<HeaderContentProps> = ({ logoutAccount }) =
                                     color: '#141414',
                                     fontWeight: 'bold',
                                     cursor: 'pointer',
-                                    marginRight: '12px',
                                 }}
                             >
                                 {mockUser.charAt(0)}

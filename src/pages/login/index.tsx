@@ -73,10 +73,6 @@ export const LoginPage: React.FC = () => {
                                 Remember me
                             </Checkbox>
                         </Form.Item>
-
-                        <Link className="login-form-forgot" to="/forgot-password">
-                            Forgot password
-                        </Link>
                     </Form.Item>
 
                     <Form.Item>
