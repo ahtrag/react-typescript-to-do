@@ -1,7 +1,7 @@
 import { ArrowLeftOutlined, UnlockOutlined } from '@ant-design/icons'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Avatar, Button, Card, Input, notification, Form } from 'antd'
+import { Avatar, Button, Card, Input, notification, Form, message } from 'antd'
 import styles from './changepassword.module.css'
 import { getData } from '../../utils/utilsStorage'
 import { CHANGE_PASSWORD } from '../../constant/APIConstant'
@@ -39,11 +39,18 @@ export const ChangePassword: React.FC = () => {
                 },
                 body: JSON.stringify(payload),
             })
-                .then(res => res.json())
-                .then(() => {
-                    setLoadingChange(false)
+                .then(async res => {
+                    const response = await res.json()
 
-                    openNotificationWithIcon('success')
+                    if (!res.ok) {
+                        setLoadingChange(false)
+
+                        message.error(response.detail)
+                    } else {
+                        setLoadingChange(false)
+
+                        openNotificationWithIcon('success')
+                    }
                 })
         } catch (err) {
             console.log('ERROR_CHANGE_PASSWORD >>', err)

@@ -1,5 +1,5 @@
 import { ArrowLeftOutlined, UserAddOutlined } from '@ant-design/icons'
-import { Card, Form, Input, Button, Avatar, notification } from 'antd'
+import { Card, Form, Input, Button, Avatar, notification, message } from 'antd'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { REGISTER_USER } from '../../constant/APIConstant'
@@ -31,15 +31,22 @@ export const Register: React.FC = () => {
                 },
                 body: JSON.stringify(values),
             })
-                .then(res => res.json())
-                .then(() => {
-                    setLoadingRegister(false)
+                .then(async res => {
+                    const response: any = await res.json()
 
-                    openNotificationWithIcon('success')
+                    if (!res.ok) {
+                        setLoadingRegister(false)
 
-                    setTimeout(() => {
-                        navigate('/')
-                    }, 5000)
+                        message.error(response.detail)
+                    } else {
+                        setLoadingRegister(false)
+
+                        openNotificationWithIcon('success')
+
+                        setTimeout(() => {
+                            navigate('/')
+                        }, 5000)
+                    }
                 })
         } catch (err) {
             console.log('ERROR_REGISTER >>', err)
@@ -81,6 +88,10 @@ export const Register: React.FC = () => {
                                 {
                                     required: true,
                                     message: 'Please input your Email!',
+                                },
+                                {
+                                    pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                                    message: 'Please input valid email address!'
                                 },
                             ]}
                         >

@@ -33,23 +33,25 @@ export const LoginPage: React.FC = () => {
                 },
                 body: JSON.stringify(restValues),
             })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.id) {
-                        const { password, ...restData } = data
+                .then(async res => {
+                    const response = await res.json()
+
+                    if (!res.ok) {
+                        setLoadingSubmit(false)
+
+                        message.error(`${response.detail}. Please check your login detail`)
+                    } else {
+                        setLoadingSubmit(false)
+
+                        const { password, ...restData } = response
 
                         navigate('/home')
                         setUser(restData)
                         setData('user-data', restData)
-                        setLoadingSubmit(false)
-                    } else {
-                        setLoadingSubmit(false)
-
-                        message.error(`${data.detail}. Please check your login detail`)
                     }
                 })
         } catch (err) {
-            console.log(err)
+            console.log('ERROR_LOGIN >>', err)
         }
     }
 
