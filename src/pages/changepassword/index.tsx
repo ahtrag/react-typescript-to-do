@@ -8,9 +8,10 @@ import { CHANGE_PASSWORD } from '../../constant/APIConstant'
 
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-export const ChangePassword: React.FC = () => {
+export const ChangePassword: React.FC = (props) => {
     const [loadingChange, setLoadingChange] = useState<boolean>(false)
     const [api, contextHolder] = notification.useNotification();
+    const [form] = Form.useForm()
 
     const navigate = useNavigate()
 
@@ -50,6 +51,9 @@ export const ChangePassword: React.FC = () => {
                         setLoadingChange(false)
 
                         openNotificationWithIcon('success')
+
+                        // reset all fields to initial value
+                        form.resetFields()
                     }
                 })
         } catch (err) {

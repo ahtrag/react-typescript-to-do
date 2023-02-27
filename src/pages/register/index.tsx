@@ -10,6 +10,7 @@ type NotificationType = 'success' | 'info' | 'warning' | 'error';
 export const Register: React.FC = () => {
     const [loadingRegister, setLoadingRegister] = useState<boolean>(false)
     const [api, contextHolder] = notification.useNotification();
+    const [form] = Form.useForm()
     const navigate = useNavigate()
 
     const openNotificationWithIcon = (type: NotificationType) => {
@@ -46,6 +47,9 @@ export const Register: React.FC = () => {
                         setTimeout(() => {
                             navigate('/')
                         }, 5000)
+
+                        // reset all fields to initial value
+                        form.resetFields()
                     }
                 })
         } catch (err) {

@@ -5,3 +5,5 @@ export const LOGIN_USER = `${ROOT_URL}/user/login`
 export const REGISTER_USER = `${ROOT_URL}/user/register`
 
 export const CHANGE_PASSWORD = `${ROOT_URL}/user/change-password`
+
+export const TODO_URL = `${ROOT_URL}/todo`

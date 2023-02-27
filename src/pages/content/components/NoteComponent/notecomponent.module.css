@@ -1,7 +1,28 @@
 .filterContainer {
     width: 50%;
+    margin-top: 50px;
 }
 
 .inputFilter {
     border: none;
+}
+
+.card {
+    background-color: #242525;
+    color: whitesmoke;
+    border: none;
+}
+
+.minus {
+    position: relative;
+    top: 4px;
+    margin: 0 8px;
+    color: #999;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.button {
+    text-align: center;
 }
