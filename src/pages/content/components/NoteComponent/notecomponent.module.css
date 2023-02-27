@@ -26,3 +26,8 @@
 .button {
     text-align: center;
 }
+
+.cardContent {
+    min-width: 100%;
+    min-height: 100%;
+}

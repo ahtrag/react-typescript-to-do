@@ -1,0 +1,18 @@
+.filterContainer {
+    width: 50%;
+    margin-top: 50px;
+}
+
+.cardContent {
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.checkboxGroup {
+    width: 100%;
+    display: inherit;
+}
+
+.striketrought {
+    text-decoration: line-through;  
+}

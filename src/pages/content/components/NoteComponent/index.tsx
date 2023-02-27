@@ -1,18 +1,47 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Card, Form, Input, message } from 'antd'
+import { Button, Card, Form, Input, List, message } from 'antd'
 import styles from './notecomponent.module.css'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { TODO_URL } from '../../../../constant/APIConstant';
 import { getData } from '../../../../utils/utilsStorage';
+import { TodoCard } from '../TodoCard';
 
 export const NoteComponent: React.FC = () => {
     const [loadingCreate, setLoadingCreate] = useState<boolean>(false)
+    const [loadingCard, setLoadingCard] = useState<boolean>(false)
+    const [listTodo, setListTodo] = useState<any>([])
+
+    const reloadCardComponent = () => {
+        setLoadingCard(true)
+
+        setTimeout(() => {
+            setLoadingCard(false)
+        }, 3000)
+    }
+
+    const getTodoList = () => {
+        try {
+            fetch(`${TODO_URL}?status.equal=active`)
+                .then(async res => {
+                    const response = await res.json()
+
+                    if (!res.ok) {
+                        message.error(response.detail)
+                    } else {
+                        setListTodo(response)
+                        reloadCardComponent()
+                    }
+                })
+        } catch (err) {
+            console.log('ERORR_FETCH_TODO >>', err)
+        }
+    }
 
     useEffect(() => {
-
+        getTodoList()
     }, [])
 
-    const handlePostNote = (values: any) => {
+    const handlePostTodo = (values: any) => {
         const { title, todoList: valTodo } = values
         const userData = getData('user-data')
 
@@ -42,6 +71,10 @@ export const NoteComponent: React.FC = () => {
 
                         message.error(response.detail)
                     } else {
+                        message.success('To-do has been created!')
+
+                        getTodoList()
+
                         setLoadingCreate(false)
                     }
                 })
@@ -55,7 +88,7 @@ export const NoteComponent: React.FC = () => {
             <div className={styles.filterContainer}>
                 <Card className={styles.card}>
                     <Form
-                        onFinish={handlePostNote}
+                        onFinish={handlePostTodo}
                     >
                         <Form.Item
                             name="title"
@@ -125,6 +158,22 @@ export const NoteComponent: React.FC = () => {
                         </Form.Item>
                     </Form>
                 </Card>
+
+                <>
+                    <List
+                        style={{ marginTop: '12px', textAlign: 'left' }}
+                        dataSource={listTodo}
+                        renderItem={(item: any) => (
+                            <List.Item>
+                                <TodoCard
+                                    todoData={item}
+                                    loading={loadingCard}
+                                    getTodoList={getTodoList}
+                                />
+                            </List.Item>
+                        )}
+                    />
+                </>
             </div>
         </>
     )

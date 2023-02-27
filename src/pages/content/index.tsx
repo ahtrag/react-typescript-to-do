@@ -1,5 +1,6 @@
 import {
     BulbOutlined,
+    DeleteOutlined,
     UserOutlined,
 } from '@ant-design/icons'
 import React, { useContext, useState } from 'react'
@@ -12,6 +13,7 @@ import { AboutUs } from './components/AboutUs';
 import { NoteComponent } from './components/NoteComponent';
 import { UserContext } from '../../context/LoginContext';
 import { clearData, getData } from '../../utils/utilsStorage';
+import { Trash } from './components/Trash';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -33,7 +35,8 @@ function getItem(
 
 const items: MenuItem[] = [
     getItem('Notes', '1', <BulbOutlined />),
-    getItem('About Us', '2', <UserOutlined />)
+    getItem('Trash', '2', <DeleteOutlined />),
+    getItem('About Us', '3', <UserOutlined />),
 ]
 
 export const ContentPage: React.FC = () => {
@@ -57,6 +60,8 @@ export const ContentPage: React.FC = () => {
             case '1':
                 return (<NoteComponent />);
             case '2':
+                return (<Trash />)
+            case '3':
                 return (<AboutUs />);
             default:
                 break;
