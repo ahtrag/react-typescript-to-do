@@ -13,7 +13,7 @@ import styles from './todocard.module.css'
 const { confirm } = Modal
 
 export const TodoCard: React.FC<any> = ({ todoData, getTodoList, loading }) => {
-    const [checked, setChecked] = useState<any>([])
+    const [checked, setChecked] = useState<any>(todoData.todoList || [])
 
     const checkMore = (items: any) => {
         setChecked([...checked, items]);
@@ -58,12 +58,41 @@ export const TodoCard: React.FC<any> = ({ todoData, getTodoList, loading }) => {
     }
 
     const updateTodo = () => {
-        console.log('todoData.todoList', todoData.todoList)
-        console.log('checked.description', checked)
+        const combineNewTodo = [...checked].reduce((prev, curr) => {
+            const index = prev.findIndex((val: any) => val.description === curr.description)
+            if (index === -1) {
+                prev.push(curr)
+            } else {
+                prev[index] = curr
+            }
 
-        const combineNewTodo = [...todoData.todoList, ...checked]
+            return prev
+        }, [...todoData.todoList])
 
-        console.log('combineNewTodo', combineNewTodo)
+
+        const payload = { ...todoData, todoList: combineNewTodo }
+
+        try {
+            fetch(`${TODO_URL}/${todoData.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            })
+                .then(async res => {
+                    const response = await res.json()
+
+                    if (!res.ok) {
+                        message.error(response.detail)
+                    } else {
+                        message.success('To-do list has been updated!')
+                        getTodoList()
+                    }
+                })
+        } catch (err) {
+            console.log('ERROR_DELETE_TODO >>', err)
+        }
     }
 
     return (
